@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginUser, clearAuthError, selectAuthStatus, selectAuthError, selectIsAuthenticated } from '../redux/slices/authSlice';
+import { loginUser, clearAuthError, selectAuthStatus, selectAuthError, selectIsAuthenticated } from '../redux/slices/AuthSlice';
 
 export default function Login() {
   const dispatch        = useDispatch();

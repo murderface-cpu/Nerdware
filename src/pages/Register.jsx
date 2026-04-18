@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { registerUser, clearAuthError, selectAuthStatus, selectAuthError, selectIsAuthenticated } from '../redux/slices/authSlice';
+import { registerUser, clearAuthError, selectAuthStatus, selectAuthError, selectIsAuthenticated } from '../redux/slices/AuthSlice';
 import '../index.css';
 
 export default function Register() {
