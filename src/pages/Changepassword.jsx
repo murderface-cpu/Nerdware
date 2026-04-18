@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePassword, clearPasswordState, selectPasswordStatus, selectPasswordError } from '../redux/slices/authSlice';
-import '../index.css';
+import { changePassword, clearPasswordState, selectPasswordStatus, selectPasswordError } from '../redux/slices/authslice';
 
 export default function ChangePassword() {
   const dispatch       = useDispatch();

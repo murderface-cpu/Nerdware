@@ -13,7 +13,7 @@ import {
   selectUpdateError,
   selectPasswordStatus,
   selectPasswordError,
-} from '../redux/slices/AuthSlice';
+} from '../redux/slices/authslice';
 
 /* ─── tiny helpers ────────────────────────────────────────────────────────── */
 const initials = (name = '') =>

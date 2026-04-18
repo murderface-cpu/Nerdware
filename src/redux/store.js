@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import testimonialReducer from './slices/testimonialSlice';
 import blogReducer from './slices/Blogslice';
 import portfolioReducer from './slices/portfolioSlice';
-import authReducer from './slices/AuthSlice';
+import authReducer from './slices/authslice';
 
 export const store = configureStore({
   reducer: {

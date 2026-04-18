@@ -2,7 +2,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsAuthenticated, selectUser } from '../../redux/slices/authSlice';
+import { selectIsAuthenticated, selectUser } from '../../redux/slices/authslice';
 
 
 const Header = () => {
