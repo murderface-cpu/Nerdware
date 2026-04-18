@@ -1,18 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom'
-import { store } from './redux/store';
+import { ViteReactSSG } from 'vite-react-ssg';
+import { routes } from './App.jsx';
 import './index.css';
-import App from './App.jsx'
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+// minimal — avoid wrapping providers here
+export const createRoot = ViteReactSSG(
+  { routes },
+  ({ isClient }) => {
+    if (isClient) {
+      console.log('Client hydrated');
+    }
+  }
 );
