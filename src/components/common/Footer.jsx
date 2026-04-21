@@ -10,7 +10,7 @@ const Footer = () => {
       <Container>
         <Row className="justify-content-between">
           <Col md={4} className="mb-4 mb-md-0">
-            <h4 className="text-white mb-4">Nerdware System Technologies</h4>
+            <h4 className="text-white mb-4">Nerdware Systems Limited.</h4>
             <p>Pushing Technologies to the Limits</p>
             <p>Our vision is to translate knowledge into innovative applications that will have significant societal and economic impacts.</p>
           </Col>

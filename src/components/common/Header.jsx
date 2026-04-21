@@ -73,12 +73,12 @@ const Header = () => {
           >
             <img
               src="/images/logo.png"
-              alt="Nerdware System Technologies"
+              alt="Nerdware Systems"
               height="36"
               style={{ display: 'inline-block' }}
               onError={(e) => { e.target.style.display = 'none'; }}
             />
-            <span style={{ color: '#ffffff' }}>Nerdware Technologies</span>
+            <span style={{ color: '#ffffff' }}>Nerdware Systems</span>
           </Navbar.Brand>
 
           {/* Desktop Nav */}
