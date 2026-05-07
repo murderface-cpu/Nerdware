@@ -1,9 +1,8 @@
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuthenticated, selectUser } from '../../redux/slices/authslice';
-
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -11,6 +10,8 @@ const Header = () => {
   const location = useLocation();
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const user = useSelector(selectUser);
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
   
   const avatarUrl = user?.avatar || "https://gravatar.com/avatar/c27ed039266d0e757973489b42b30064?s=400&d=robohash&r=x";
 
@@ -19,10 +20,17 @@ const Header = () => {
     setExpanded(false);
   }, [location.pathname]);
 
+
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      const currentY = window.scrollY;
+
+      setScrolled(currentY > 40);
+      setVisible(currentY < lastScrollY.current || currentY < 10);
+
+      lastScrollY.current = currentY;
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -34,7 +42,7 @@ const Header = () => {
       expanded={expanded}
       onToggle={() => setExpanded(!expanded)}
       className={`fixed-top ${scrolled ? 'navbar-scrolled' : ''}`}
-      style={{ background: 'transparent', padding: '0.5rem 0' }}
+      style={{ background: 'transparent', padding: '0.5rem 0', transform: visible ? 'translateY(0)' : 'translateY(-110%)', transition: 'transform 0.35s ease', }}
     >
       <Container>
         {/* Glassmorphism pill wrapper */}

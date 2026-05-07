@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
@@ -6,37 +7,40 @@ import { store } from './redux/store';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Portfolio from './pages/Portfolio';
-import Blog from './pages/Blog';
-import Contact from './pages/Contact';
-import Error404 from './pages/Error404';
-import BlogDetail from './pages/BlogDetail';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ChangePassword from './pages/Changepassword';
-import Profile from './pages/Profile';
+// ── Public pages (lazy-loaded — each becomes its own chunk) ──────────────────
+const Home           = lazy(() => import('./pages/Home'));
+const About          = lazy(() => import('./pages/About'));
+const Services       = lazy(() => import('./pages/Services'));
+const Portfolio      = lazy(() => import('./pages/Portfolio'));
+const Blog           = lazy(() => import('./pages/Blog'));
+const BlogDetail     = lazy(() => import('./pages/BlogDetail'));
+const Contact        = lazy(() => import('./pages/Contact'));
+const Error404       = lazy(() => import('./pages/Error404'));
+const Login          = lazy(() => import('./pages/Login'));
+const Register       = lazy(() => import('./pages/Register'));
+const ChangePassword = lazy(() => import('./pages/Changepassword'));
+const Profile        = lazy(() => import('./pages/Profile'));
 
-// Admin imports
-import AdminLayout    from './components/admin/AdminLayout';
-import AdminOverview  from './pages/admin/AdminOverview';
-import AdminBlogList  from './pages/admin/AdminBlogList';
-import AdminBlogForm  from './pages/admin/AdminBlogForm';
-import AdminUsers     from './pages/admin/AdminUsers';
-import AdminPortfolio from './pages/admin/AdminPortfolio';
-import AdminMessages from './pages/admin/AdminMessages';
-import AdminApplications from './pages/admin/AdminApplications';
-import AdminNewsletter from './pages/admin/AdminNewsletter';
+// ── Admin pages (lazy-loaded — rarely visited, keeps main bundle small) ───────
+const AdminLayout       = lazy(() => import('./components/admin/AdminLayout'));
+const AdminOverview     = lazy(() => import('./pages/admin/AdminOverview'));
+const AdminBlogList     = lazy(() => import('./pages/admin/AdminBlogList'));
+const AdminBlogForm     = lazy(() => import('./pages/admin/AdminBlogForm'));
+const AdminUsers        = lazy(() => import('./pages/admin/AdminUsers'));
+const AdminPortfolio    = lazy(() => import('./pages/admin/AdminPortfolio'));
+const AdminMessages     = lazy(() => import('./pages/admin/AdminMessages'));
+const AdminApplications = lazy(() => import('./pages/admin/AdminApplications'));
+const AdminNewsletter   = lazy(() => import('./pages/admin/AdminNewsletter'));
 
-// ── Public layout (has Header + Footer) ──────────────────────────────────────
+// ── Public layout (Header + Outlet + Footer) ──────────────────────────────────
 const Layout = () => (
   <Provider store={store}>
     <HelmetProvider>
       <div className="app">
         <Header />
-        <Outlet />
+        <Suspense fallback={<div />}>
+          <Outlet />
+        </Suspense>
         <Footer />
       </div>
     </HelmetProvider>
@@ -45,18 +49,19 @@ const Layout = () => (
 
 // ── Admin layout wrapper (no Header / Footer) ─────────────────────────────────
 // AdminLayout itself handles auth-guarding, sidebar, topbar, and <Outlet />.
-// We still need Provider + HelmetProvider around it.
 const AdminRoot = () => (
   <Provider store={store}>
     <HelmetProvider>
-      <AdminLayout />
+      <Suspense fallback={<div />}>
+        <AdminLayout />
+      </Suspense>
     </HelmetProvider>
   </Provider>
 );
 
 // ── Routes (data-router format) ───────────────────────────────────────────────
 export const routes = [
-  // ── Public routes (with Header + Footer) ───────────────────────────────────
+  // ── Public routes ──────────────────────────────────────────────────────────
   {
     path: '/',
     element: <Layout />,
@@ -77,20 +82,20 @@ export const routes = [
     ],
   },
 
-  // ── Admin routes (no Header / Footer) ──────────────────────────────────────
+  // ── Admin routes ────────────────────────────────────────────────────────────
   {
     path: 'admin',
     element: <AdminRoot />,
     children: [
-      { index: true,           element: <AdminOverview /> },
-      { path: 'blog',          element: <AdminBlogList /> },
-      { path: 'blog/new',      element: <AdminBlogForm /> },
-      { path: 'blog/edit/:id', element: <AdminBlogForm /> },
-      { path: 'portfolio',     element: <AdminPortfolio /> },
-      { path: 'users',         element: <AdminUsers /> },
-      { path: 'messages',      element: <AdminMessages /> },
-      { path: 'applications',  element: <AdminApplications /> },
-      {path: 'newsletter',     element: <AdminNewsletter /> },
+      { index: true,             element: <AdminOverview /> },
+      { path: 'blog',            element: <AdminBlogList /> },
+      { path: 'blog/new',        element: <AdminBlogForm /> },
+      { path: 'blog/edit/:id',   element: <AdminBlogForm /> },
+      { path: 'portfolio',       element: <AdminPortfolio /> },
+      { path: 'users',           element: <AdminUsers /> },
+      { path: 'messages',        element: <AdminMessages /> },
+      { path: 'applications',    element: <AdminApplications /> },
+      { path: 'newsletter',      element: <AdminNewsletter /> },
     ],
   },
 ];

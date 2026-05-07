@@ -11,6 +11,7 @@ selectCurrentPost,
 selectDetailStatus,
 selectBlogsError,
 } from '../redux/slices/Blogslice';
+import SEO from '../components/common/SEO';
 
 /* ─── Skeleton ────────────────────────────────────────────────────────────── */
 const DetailSkeleton = () => (
@@ -253,15 +254,22 @@ return (
 <BlogContentStyles />
 
 {post && (
-<Helmet>
-<title>{post.title} | Nerdware Blog</title>
-<meta name="description" content={post.excerpt} />
-<meta property="og:title"       content={post.title} />
-<meta property="og:description" content={post.excerpt} />
-{post.coverImage && <meta property="og:image" content={post.coverImage} />}
-<link rel="canonical" href={`https://nerdwaretechnologies.com/blog/${post.slug}`} />
-</Helmet>
-)}
+        <SEO
+          title={post.title}
+          description={post.excerpt}
+          image={post.coverImage}
+          url={`/blog/${post.slug}`}
+          type="article"
+          article={{
+            publishedAt: post.publishedAt || post.createdAt,
+            updatedAt:   post.updatedAt,
+            author:      post.author?.name,
+            tags:        post.tags,
+            category:    post.category,
+            readTime:    post.readTime || post.read_time,
+          }}
+        />
+      )}
 
 <main>
 {/* ── Page header spacer ──────────────────────────────────────────── */}
