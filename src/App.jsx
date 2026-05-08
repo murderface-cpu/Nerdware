@@ -38,7 +38,8 @@ const Layout = () => (
     <HelmetProvider>
       <div className="app">
         <Header />
-        <Suspense fallback={<div />}>
+        {/* null fallback avoids a server/client <div> mismatch during hydration */}
+        <Suspense fallback={null}>
           <Outlet />
         </Suspense>
         <Footer />
@@ -52,7 +53,7 @@ const Layout = () => (
 const AdminRoot = () => (
   <Provider store={store}>
     <HelmetProvider>
-      <Suspense fallback={<div />}>
+      <Suspense fallback={null}>
         <AdminLayout />
       </Suspense>
     </HelmetProvider>

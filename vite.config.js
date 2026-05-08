@@ -141,25 +141,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-        // React core — keep together, small
+        // React core + scheduler — keep together to avoid circular dep
+        // scheduler is required by react-dom at init time; putting it in
+        // 'vendor' creates a vendor→react→vendor cycle at runtime.
         if (id.includes('node_modules/react/') ||
-            id.includes('node_modules/react-dom/')) {
+            id.includes('node_modules/react-dom/') ||
+            id.includes('node_modules/scheduler/')) {
           return 'react';
         }
-
+ 
         // Router — isolated to break the circular dep
         if (id.includes('node_modules/react-router') ||
             id.includes('node_modules/@remix-run')) {
           return 'router';
         }
-
+ 
         // Redux
         if (id.includes('node_modules/redux') ||
             id.includes('node_modules/react-redux') ||
             id.includes('node_modules/@reduxjs')) {
           return 'redux';
         }
-
+ 
         // Editor / rich-text (commonly heavy)
         if (id.includes('node_modules/@tiptap') ||
             id.includes('node_modules/quill') ||
@@ -167,7 +170,7 @@ export default defineConfig({
             id.includes('node_modules/slate')) {
           return 'editor';
         }
-
+ 
         // UI component libraries
         if (id.includes('node_modules/@mui') ||
             id.includes('node_modules/@headlessui') ||
@@ -175,7 +178,7 @@ export default defineConfig({
             id.includes('node_modules/lucide-react')) {
           return 'ui';
         }
-
+ 
         // Everything else in node_modules
         if (id.includes('node_modules')) {
           return 'vendor';
