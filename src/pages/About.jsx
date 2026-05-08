@@ -66,7 +66,7 @@ const About = () => {
               <Col lg={8}>
                 <div className="about-hero__pill fade-in-up">Our Story</div>
                 <h1 className="about-hero__title fade-in-up fade-in-up-delay-1">
-                  We Build Digital<br />
+                  We Build Digital{' '}
                   <span className="text-gradient">Experiences That Matter</span>
                 </h1>
                 <p className="about-hero__lead fade-in-up fade-in-up-delay-2">
@@ -95,8 +95,8 @@ const About = () => {
         {/* ── Story ── */}
         <section className="about-story">
           <Container>
-            <Row className="align-items-center g-5">
-              <Col lg={5}>
+            <Row className="align-items-center g-4 g-lg-5">
+              <Col xs={12} lg={5}>
                 <div className="about-image-wrapper">
                   <div className="about-image-wrapper__frame" />
                   <div className="about-image-wrapper__inner">
@@ -111,9 +111,9 @@ const About = () => {
                   </div>
                 </div>
               </Col>
-              <Col lg={7}>
+              <Col xs={12} lg={7}>
                 <p className="section-eyebrow">Who We Are</p>
-                <h2 className="about-story__heading">Driven by curiosity,<br/>defined by craft</h2>
+                <h2 className="about-story__heading">Driven by curiosity, defined by craft</h2>
                 <p className="about-story__body">
                   We started with a simple but powerful belief technology should solve real problems
                   and create lasting value. From that seed, Nerdware grew into a team of developers,
@@ -144,7 +144,7 @@ const About = () => {
               </Col>
             </Row>
             <Row className="g-4">
-              <Col md={6}>
+              <Col xs={12} md={6}>
                 <div className="mv-card">
                   <div className="mv-card__icon">
                     <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
@@ -163,7 +163,7 @@ const About = () => {
                   </p>
                 </div>
               </Col>
-              <Col md={6}>
+              <Col xs={12} md={6}>
                 <div className="mv-card mv-card--vision">
                   <div className="mv-card__icon">
                     <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
@@ -196,7 +196,7 @@ const About = () => {
             </Row>
             <Row className="g-4">
               {values.map((v, i) => (
-                <Col md={4} key={i}>
+                <Col xs={12} md={4} key={i}>
                   <div className="value-card">
                     <div className="value-card__icon">{v.icon}</div>
                     <h4 className="value-card__title">{v.title}</h4>
@@ -214,7 +214,7 @@ const About = () => {
           <div className="about-cta__glow" />
           <Container className="position-relative text-center">
             <p className="section-eyebrow">Let's Build Together</p>
-            <h2 className="about-cta__heading">Ready to start your<br />next project?</h2>
+            <h2 className="about-cta__heading">Ready to start your next project?</h2>
             <p className="about-cta__sub">
               We'd love to hear about your vision. Let's turn it into something extraordinary.
             </p>
@@ -248,7 +248,7 @@ const About = () => {
         /* ─── Hero ─── */
         .about-hero {
           position: relative;
-          padding: 160px 0 100px;
+          padding: clamp(90px, 14vw, 160px) 0 clamp(50px, 8vw, 100px);
           overflow: hidden;
         }
 
@@ -317,11 +317,13 @@ const About = () => {
         }
 
         .about-hero__title {
-          font-size: clamp(2.75rem, 5.5vw, 4.75rem);
+          font-size: clamp(1.5rem, 6.5vw, 4.75rem);
           font-weight: 800;
-          letter-spacing: -0.035em;
-          line-height: 1.05;
+          letter-spacing: -0.01em;
+          line-height: 1.12;
           margin-bottom: 1.5rem;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
 
         .about-hero__lead {
@@ -388,7 +390,7 @@ const About = () => {
 
         /* ─── Story ─── */
         .about-story {
-          padding: 80px 0 100px;
+          padding: clamp(50px, 8vw, 80px) 0 clamp(60px, 10vw, 100px);
         }
 
         /* IMAGE key fix: contain the image without cropping */
@@ -396,6 +398,8 @@ const About = () => {
           position: relative;
           padding-bottom: 16px;
           padding-right: 16px;
+          max-width: 480px;
+          margin: 0 auto;
         }
 
         .about-image-wrapper__frame {
@@ -448,11 +452,13 @@ const About = () => {
         }
 
         .about-story__heading {
-          font-size: clamp(1.875rem, 3vw, 2.625rem);
+          font-size: clamp(1.5rem, 4vw, 2.625rem);
           font-weight: 800;
-          letter-spacing: -0.03em;
-          line-height: 1.1;
+          letter-spacing: -0.025em;
+          line-height: 1.15;
           margin-bottom: 1.5rem;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
 
         .about-story__body {
@@ -486,7 +492,7 @@ const About = () => {
         /* ─── Mission & Vision ─── */
         .about-mv {
           position: relative;
-          padding: 100px 0;
+          padding: clamp(60px, 10vw, 100px) 0;
           overflow: hidden;
           border-top: 1px solid var(--border-subtle);
           border-bottom: 1px solid var(--border-subtle);
@@ -562,7 +568,7 @@ const About = () => {
 
         /* ─── Values ─── */
         .about-values {
-          padding: 100px 0;
+          padding: clamp(60px, 10vw, 100px) 0;
         }
 
         .value-card {
@@ -627,7 +633,7 @@ const About = () => {
         /* ─── CTA ─── */
         .about-cta {
           position: relative;
-          padding: 120px 0;
+          padding: clamp(60px, 10vw, 120px) 0;
           overflow: hidden;
           border-top: 1px solid var(--border-subtle);
         }
@@ -640,11 +646,13 @@ const About = () => {
         }
 
         .about-cta__heading {
-          font-size: clamp(2rem, 4vw, 3.25rem);
+          font-size: clamp(1.5rem, 4vw, 3.25rem);
           font-weight: 800;
-          letter-spacing: -0.035em;
+          letter-spacing: -0.025em;
           margin-bottom: 1.25rem;
-          line-height: 1.1;
+          line-height: 1.15;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
 
         .about-cta__sub {
@@ -669,10 +677,111 @@ const About = () => {
         .fade-in-up-delay-1 { animation-delay: 0.1s; }
         .fade-in-up-delay-2 { animation-delay: 0.2s; }
 
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to   { opacity: 1; transform: translateY(0); }
+        /* ─── Responsive: ≤ 767px ─── */
+        @media (max-width: 767px) {
+
+          /* Stats: keep 2×2, already handled at 575px but reinforce */
+          .about-stats__strip {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .about-stats__item:nth-child(3) {
+            border-left: none;
+            border-top: 1px solid var(--border-subtle);
+          }
+          .about-stats__item:nth-child(4) {
+            border-top: 1px solid var(--border-subtle);
+          }
+
+          /* Stats padding tighter on mobile */
+          .about-stats__item {
+            padding: 1.5rem 1rem;
+          }
+
+          /* Story section: add bottom margin to image so text breathes */
+          .about-image-wrapper {
+            padding-bottom: 10px;
+            padding-right: 10px;
+            margin-bottom: 1.5rem;
+          }
+          .about-image-wrapper__frame {
+            left: 10px;
+            top: 10px;
+          }
+
+          /* Story text: center on mobile */
+          .about-story .section-eyebrow,
+          .about-story__heading,
+          .about-story__body {
+            text-align: left;
+          }
+
+          /* MV / value cards: full padding reduction */
+          .mv-card,
+          .value-card {
+            padding: 1.75rem;
+          }
+
+          /* CTA buttons: stack full-width */
+          .about-cta__actions {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .about-cta__actions .btn {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+          }
+
+          /* Value cards: ensure xs full width (Bootstrap md=4 doesn't give xs) */
+          .about-values .row > [class*="col-"] {
+            width: 100%;
+          }
+
+          /* Hero: tighten top padding on small screens */
+          .about-hero {
+            padding-top: clamp(70px, 12vw, 120px);
+          }
+
+          /* Mission & Vision section heading */
+          .about-mv .row.mb-5 {
+            margin-bottom: 2rem !important;
+          }
         }
+
+        /* ─── Responsive: ≤ 480px ─── */
+        @media (max-width: 480px) {
+          .about-stats__value {
+            font-size: 1.75rem;
+          }
+          .about-stats__label {
+            font-size: 0.7rem;
+          }
+          .about-hero__lead {
+            font-size: 0.9375rem;
+          }
+          /* Tighten section padding further on very small screens */
+          .about-mv,
+          .about-values {
+            padding: 48px 0;
+          }
+          .about-story {
+            padding: 40px 0 48px;
+          }
+          /* MV / value card padding */
+          .mv-card,
+          .value-card {
+            padding: 1.25rem;
+          }
+          /* Badge font on tiny screens */
+          .mv-card__label {
+            font-size: 0.62rem;
+          }
+          /* Stats strip: reduce top margin */
+          .about-stats {
+            padding: 0 0 48px;
+          }
+        }
+
       `}</style>
     </>
   );

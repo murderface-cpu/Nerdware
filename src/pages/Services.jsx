@@ -10,7 +10,7 @@ import {
 const S = {
   /* hero */
   hero: {
-    padding: '140px 0 90px',
+    padding: 'clamp(90px,14vw,140px) 0 clamp(50px,8vw,90px)',
     background: 'var(--bg-midnight)',
     position: 'relative',
     overflow: 'hidden',
@@ -39,12 +39,14 @@ const S = {
     animation: 'pulse 2s infinite',
   },
   heroTitle: {
-    fontSize: 'clamp(3rem,6vw,5.5rem)',
+    fontSize: 'clamp(1.75rem,7vw,5.5rem)',
     fontWeight: 800,
-    letterSpacing: '-0.03em',
-    lineHeight: 1.05,
+    letterSpacing: '-0.02em',
+    lineHeight: 1.1,
     color: 'var(--text-primary)',
     marginBottom: '1.5rem',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
   },
   heroSub: {
     fontSize: '1.125rem',
@@ -79,12 +81,14 @@ const S = {
     marginBottom: '0.75rem',
   },
   sectionTitle: {
-    fontSize: 'clamp(2rem,4vw,3rem)',
+    fontSize: 'clamp(1.5rem,4vw,3rem)',
     fontWeight: 800,
-    letterSpacing: '-0.03em',
+    letterSpacing: '-0.02em',
     color: 'var(--text-primary)',
-    lineHeight: 1.1,
+    lineHeight: 1.15,
     marginBottom: '1rem',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
   },
   sectionDesc: {
     color: 'var(--text-muted)',
@@ -216,7 +220,7 @@ const S = {
     background: 'linear-gradient(135deg, rgba(238,79,39,0.18) 0%, rgba(107,33,239,0.12) 100%)',
     border: '1px solid var(--border-subtle)',
     borderRadius: 'var(--radius-xl)',
-    padding: '60px 48px',
+    padding: 'clamp(32px,6vw,60px) clamp(20px,5vw,48px)',
     textAlign: 'center',
     position: 'relative',
     overflow: 'hidden',
@@ -511,6 +515,45 @@ const Services = () => {
           background: rgba(255,255,255,0.08) !important;
           color: #fff !important;
         }
+
+        /* ── Global overflow guard ───────────────────────────────── */
+        html, body { max-width: 100%; overflow-x: hidden; }
+
+        /* ── Mobile: ≤ 767px ─────────────────────────────────────── */
+        @media (max-width: 767px) {
+
+          /* Stat bar: 2×2 grid instead of horizontal row */
+          .svc-stat-bar {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 0 !important;
+          }
+          .svc-stat-item {
+            padding: 1.25rem 0.75rem !important;
+            border-right: none !important;
+            border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+          }
+          .svc-stat-item:nth-child(odd)  { border-right: 1px solid rgba(255,255,255,0.06) !important; }
+          .svc-stat-item:nth-last-child(-n+2) { border-bottom: none !important; }
+
+          /* AI agents: single column */
+          .svc-agents-grid { grid-template-columns: 1fr !important; }
+
+          /* Sections: reduce vertical padding */
+          .svc-section-pad { padding: 60px 0 !important; }
+
+          /* CTA buttons: full-width stacked */
+          .svc-btn-row { flex-direction: column !important; align-items: stretch !important; }
+          .svc-cta-btn, .svc-outline-btn {
+            width: 100% !important;
+            justify-content: center !important;
+          }
+        }
+
+        /* ── Small mobile: ≤ 480px ───────────────────────────────── */
+        @media (max-width: 480px) {
+          .svc-agents-grid { grid-template-columns: 1fr !important; }
+        }
       `}</style>
 
       <main>
@@ -547,7 +590,7 @@ const Services = () => {
               we build, automate, and scale your competitive edge.
             </p>
 
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', animation: 'fadeInUp 0.7s ease 0.3s both' }}>
+            <div className="svc-btn-row" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', animation: 'fadeInUp 0.7s ease 0.3s both' }}>
               <a href="/contact" className="svc-cta-btn" style={{ ...S.heroCta, transition: 'all 0.25s ease' }}>
                 Start a Project <FaArrowRight size={14} />
               </a>
@@ -569,7 +612,7 @@ const Services = () => {
             </div>
 
             {/* stat bar */}
-            <div style={{
+            <div className="svc-stat-bar" style={{
               display: 'flex',
               gap: 0,
               justifyContent: 'center',
@@ -580,7 +623,7 @@ const Services = () => {
               animation: 'fadeInUp 0.7s ease 0.45s both',
             }}>
               {[['50+', 'Projects Delivered'], ['7', 'Core Services'], ['24/7', 'AI Agents Available'], ['98%', 'Client Satisfaction']].map(([num, label]) => (
-                <div key={label} style={{
+                <div key={label} className="svc-stat-item" style={{
                   padding: '0 2.5rem',
                   borderRight: '1px solid var(--border-subtle)',
                   textAlign: 'center',
@@ -604,7 +647,7 @@ const Services = () => {
         </section>
 
         {/* ── SERVICES GRID ─────────────────────────────────────────── */}
-        <section id="services-grid" style={{ padding: '100px 0', background: 'var(--bg-midnight)', position: 'relative' }}>
+        <section id="services-grid" className="svc-section-pad" style={{ padding: '100px 0', background: 'var(--bg-midnight)', position: 'relative' }}>
           <Orb style={{ top: '20%', right: '-10%', width: 600, height: 600, background: 'radial-gradient(circle, rgba(253,137,37,0.06) 0%, transparent 70%)' }} />
 
           <Container style={{ position: 'relative', zIndex: 1 }}>
@@ -650,7 +693,7 @@ const Services = () => {
             <div ref={gridRef}>
               <Row className="g-4">
                 {services.map((svc, i) => (
-                  <Col key={svc.id} lg={i < 3 ? 4 : i < 5 ? 6 : 6} md={6}>
+                  <Col key={svc.id} xs={12} sm={6} lg={i < 3 ? 4 : 6}>
                     <ServiceCard service={svc} delay={i * 80} />
                   </Col>
                 ))}
@@ -682,7 +725,7 @@ const Services = () => {
                 </a>
               </Col>
               <Col lg={7}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="svc-agents-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                   {[
                     { title: 'Customer Support Agent', desc: 'Resolves 80% of tickets autonomously. Escalates edge cases with full context.', color: '#fd8925' },
                     { title: 'Lead Qualification Bot', desc: 'Engages inbound leads, scores them, and books discovery calls automatically.', color: '#8b5cf6' },
@@ -711,7 +754,7 @@ const Services = () => {
         </section>
 
         {/* ── PROCESS ───────────────────────────────────────────────── */}
-        <section style={S.processSection}>
+        <section className="svc-section-pad" style={S.processSection}>
           <Container>
             <Row className="justify-content-center text-center mb-5">
               <Col lg={6}>
@@ -748,7 +791,7 @@ const Services = () => {
                   Whether you need a website, an automation, or a full AI agent workforce —
                   we're the team that delivers.
                 </p>
-                <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <div className="svc-btn-row" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
                   <a href="/contact" className="svc-cta-btn" style={{ ...S.heroCta, padding: '0.875rem 2.5rem', fontSize: '1rem', transition: 'all 0.25s ease' }}>
                     Get a Free Consultation <FaArrowRight size={14} />
                   </a>
